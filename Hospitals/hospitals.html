@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Healthcare Network</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --accent: #3b82f6;
+            --light: #f8fafc;
+            --dark: #0f172a;
+            --gray: #94a3b8;
+            --success: #10b981;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--gray);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            z-index: 100;
+        }
+        
+        .back-btn:hover {
+            background: linear-gradient(45deg, var(--primary-dark), var(--primary));
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .subtitle {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--gray);
+            font-size: 1rem;
+            padding-left: 45px;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+        
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            background: white;
+            border: 1px solid var(--gray);
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+        
+        .product-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            padding: 1.5rem;
+            background: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .product-info h3 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .product-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .check-btn {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow-sm);
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .check-btn:hover {
+            background: linear-gradient(45deg, var(--primary-dark), var(--primary));
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .rating {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+            margin-bottom: 1rem;
+        }
+        
+        .rating i {
+            color: #fbbf24;
+            font-size: 0.9rem;
+        }
+        
+        .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--success);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .grid-container {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .back-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="http://localhost/final%20year%20project-2025/front.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+    
+    <header>
+        <h1>Premium Healthcare Network</h1>
+        <p class="subtitle">Find and connect with India's top hospitals for specialized care</p>
+    </header>
+    
+    <div class="search-container">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" class="search-input" placeholder="Search hospitals..." id="searchInput">
+    </div>
+    
+    <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="cardiology">Cardiology</button>
+        <button class="filter-btn" data-filter="orthopedics">Orthopedics</button>
+        <button class="filter-btn" data-filter="neurology">Neurology</button>
+        <button class="filter-btn" data-filter="oncology">Oncology</button>
+    </div>
+    
+    <div class="grid-container" id="hospitalGrid">
+        <div class="product-card" data-categories="cardiology neurology">
+            <span class="badge">Multi-Speciality</span>
+            <img src="https://jobs.docthub.com/_next/image?url=https%3A%2F%2Fdevelopment-docthub.nyc3.digitaloceanspaces.com%2Fproduction%2Ftenants%2F60f3c83998166d4cf800c4da%2Forganizationdocuments%2F17C4B166B07_logo.jpg&w=256&q=75" alt="Sparsh Hospital">
+            <div class="product-info">
+                <h3>Sparsh Hospital</h3>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+               
+                <a href="Sparsh Hospital/home.html">
+                    <button class="check-btn"><i class="fas fa-arrow-right"></i> View Services</button>
+                </a>
+            </div>
+        </div>
+        
+        <div class="product-card" data-categories="cardiology oncology">
+            <span class="badge">Premium</span>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLH349ndyWLJd5ZH14P9eNZ9F-5Pc-4OmW1w&s" alt="Apollo Hospital">
+            <div class="product-info">
+                <h3>Apollo Hospital</h3>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                
+                <a href="http://localhost/final%20year%20project-2025/Hospitals/appolo%20Hospital/">
+                    <button class="check-btn"><i class="fas fa-arrow-right"></i> View Services</button>
+                </a>
+            </div>
+        </div>
+        
+        <div class="product-card" data-categories="neurology orthopedics">
+            <img src="https://upload.wikimedia.org/wikipedia/en/d/dd/Manipal_Hospitals_%28logo%29.png" alt="Manipal Hospital">
+            <div class="product-info">
+                <h3>Manipal Hospital</h3>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                
+                <a href="http://localhost/final%20year%20project-2025/Hospitals/manipal%20hospital/">
+                    <button class="check-btn"><i class="fas fa-arrow-right"></i> View Services</button>
+                </a>
+            </div>
+        </div>
+        
+        <div class="product-card" data-categories="orthopedics">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN5Bnv7LdzIg4ndfWXI8_v7Hgzkjvq8YM0Mw&s" alt="Billroth Hospital">
+            <div class="product-info">
+                <h3>Billroth Hospital</h3>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                
+                <a href="http://localhost/final%20year%20project-2025/Hospitals/bilroth/">
+                    <button class="check-btn"><i class="fas fa-arrow-right"></i> View Services</button>
+                </a>
+            </div>
+        </div>
+        
+        <div class="product-card" data-categories="cardiology">
+            <span class="badge">Cardiac Center</span>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZI-N1jjYhzhSpnDQ95f01wsrX-0PHWaKNLw&s" alt="Forties Hospital">
+            <div class="product-info">
+                <h3>Forties Hospital</h3>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                
+                <a href="http://localhost/final%20year%20project-2025/Hospitals/forties%20hospital/">
+                    <button class="check-btn"><i class="fas fa-arrow-right"></i> View Services</button>
+                </a>
+            </div>
+        </div>
+        
+        <div class="product-card" data-categories="orthopedics neurology">
+            <img src="https://content.jdmagicbox.com/v2/comp/bangalore/t9/080pxx80.xx80.231123235950.v6t9/catalogue/raksha-hospital-vgp-layout-bangalore-gynaecologist-and-obstetrician-doctors-kc0p40qlux.jpg" alt="Raksha Multispeciality Hospital">
+            <div class="product-info">
+                <h3>Raksha Multispeciality</h3>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                
+                <a href="http://localhost/final%20year%20project-2025/Hospitals/Raksha%20Hospital/">
+                    <button class="check-btn"><i class="fas fa-arrow-right"></i> View Services</button>
+                </a>
+            </div>
+        </div>
+        
+        <div class="product-card" data-categories="cardiology neurology">
+            <span class="badge">Super Speciality</span>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_MI3dcm9oID3hsZmxV0STFoWjFEgC0NYKaA&s" alt="KMCH">
+            <div class="product-info">
+                <h3>KMCH</h3>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                
+                <a href="http://localhost/final%20year%20project-2025/Hospitals/KMCH/">
+                    <button class="check-btn"><i class="fas fa-arrow-right"></i> View Services</button>
+                </a>
+            </div>
+        </div>
+        
+        <div class="product-card" data-categories="oncology">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN8sgEElLl8OlwAYEvsfmYPydwmQUYvRsTnA&s" alt="Medway Hospitals">
+            <div class="product-info">
+                <h3>Medway Hospitals</h3>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                
+                <a href="http://localhost/final%20year%20project-2025/Hospitals/Medway%20Hospital/">
+                    <button class="check-btn"><i class="fas fa-arrow-right"></i> View Services</button>
+                </a>
+            </div>
+        </div>
+        
+        <div class="product-card" data-categories="orthopedics">
+            <span class="badge">Trauma Center</span>
+            <img src="https://doctor.myupchar.com/hospitals/9130/ganga-hospital-saibaba-colony-coimbatore-logo.png" alt="Ganga Hospital">
+            <div class="product-info">
+                <h3>Ganga Hospital</h3>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                
+                <a href="http://localhost/final%20year%20project-2025/Hospitals/Ganga%20Hospital/">
+                    <button class="check-btn"><i class="fas fa-arrow-right"></i> View Services</button>
+                </a>
+            </div>
+        </div>
+        
+        <div class="product-card" data-categories="cardiology neurology">
+            <img src="https://yt3.googleusercontent.com/ytc/AIdro_kJ4l0hoOOD6XKH16Yg6WHlh3YTjbq7xGOcUfoujpxxYw=s900-c-k-c0x00ffffff-no-rj" alt="Kauvery Hospital">
+            <div class="product-info">
+                <h3>Kauvery Hospital</h3>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                
+                <a href="http://localhost/final%20year%20project-2025/Hospitals/Kavery%20Hospital/index.html">
+                    <button class="check-btn"><i class="fas fa-arrow-right"></i> View Services</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const hospitalGrid = document.getElementById('hospitalGrid');
+        const cards = hospitalGrid.querySelectorAll('.product-card');
+        
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            cards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+        
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                const filter = button.getAttribute('data-filter');
+                
+                cards.forEach(card => {
+                    if (filter === 'all') {
+                        card.style.display = 'block';
+                    } else {
+                        const categories = card.getAttribute('data-categories');
+                        if (categories.includes(filter)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+        
+        // Add click effect to cards
+        cards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                // Don't trigger if clicking on a link or button
+                if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('a') || e.target.closest('button')) {
+                    return;
+                }
+                
+                // Find the first link in the card and click it
+                const link = card.querySelector('a');
+                if (link) {
+                    link.click();
+                }
+            });
+            
+            // Change cursor on hover
+            card.style.cursor = 'pointer';
+        });
+    </script>
+</body>
+</html>
